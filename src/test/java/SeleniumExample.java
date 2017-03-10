@@ -10,42 +10,44 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * Created by Dell on 2017/3/1.
  */
 public class SeleniumExample {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+        System.setProperty("webdriver.gecko.driver", "C:\\Windows\\System32\\geckodriver.exe");
 
         WebDriver driver = new FirefoxDriver();
-   //     WebDriver driver = new ChromeDriver();
+        //     WebDriver driver = new ChromeDriver();
 
-        // And now use this to visit Google
-        driver.get("http://www.google.com");
-        // Alternatively the same thing can be done like this
-        // driver.navigate().to("http://www.google.com");
 
-        // Find the text input element by its name
-        WebElement element = driver.findElement(By.name("q"));
-        // Enter something to search for
-        element.sendKeys("Cheese!");
+        driver.get("http://192.168.0.120:8081");
+        //打开网址域名
+        //WebElement element = driver.findElement(By.xpath("//*[@id='Account']"));
+        WebElement loginInput = driver.findElement(By.xpath("//*[@id='Account']"));
 
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        loginInput.sendKeys("hg4088");
+        //获取账号的元素并赋值
+        loginInput=driver.findElement(By.id("Password"));
 
-        WebElement we = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='tsf']/div[2]/div[3]/center/input[1]")));
-        // Now submit the form. WebDriver will find the form for us from the element
-        we.click();
+        //WebElement element = driver.findElement(By.xpath("//*[@id='Password']"));
 
-        // Check the title of the page
-        System.out.println("Page title is: " + driver.getTitle());
 
-        // Google's search is rendered dynamically with JavaScript.
-        // Wait for the page to load, timeout after 10 seconds
-        (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver d) {
-                return d.getTitle().toLowerCase().startsWith("cheese!");
-            }
-        });
 
-        // Should see: "cheese! - Google Search"
-        System.out.println("Page title is: " + driver.getTitle());
+       /// WebElement pwdInput = driver.findElement(By.xpath("//input[@id='Password']"));
+        //element.sendKeys("password=aaa222");
+        loginInput.sendKeys("aaa222");
+        // 获取密码的元素并赋值
 
-        //Close the browser
-        driver.quit();
+
+      Thread.sleep(2000);
+        WebElement loginBtn = driver.findElement(By.xpath("//*[@id='btn-submit']"));
+        loginBtn.click();
+         //点击login登录
+        //WebElement quicklyBtn = driver.findElement(By.xpath("//*[@id='btn_quickly']"));
+        //quicklyBtn.click();
+        //点击快速进入登录
+        Thread.sleep(2000);
+        WebElement agreeBtn = driver.findElement(By.xpath("//*[@id='agree']"));
+        agreeBtn.click();
+        //点击同意登录
+
     }
 }
